@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡A Multiplicar Jugando!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f7f7;
+            margin: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .ejercicio {
+            font-size: 1.5em;
+            color: #2ecc71;
+            margin-bottom: 15px;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 80px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #f39c12;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e67e22;
+        }
+
+        .resultado {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .correcto {
+            color: green;
+        }
+
+        .incorrecto {
+            color: red;
+        }
+
+        .personaje {
+            font-size: 2em;
+            margin-right: 10px;
+            color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡A Multiplicar Jugando!</h1>
+        <div class="ejercicio" id="ejercicio"></div>
+        <div class="input-container">
+            <span class="personaje">🐰 x </span>
+            <input type="number" id="respuesta" placeholder="¿Cuánto es?">
+            <button onclick="verificarRespuesta()">¡Comprobar!</button>
+        </div>
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <script>
+        let numero1;
+        let numero2;
+        let respuestaCorrecta;
+        const ejercicioElement = document.getElementById('ejercicio');
+        const respuestaInput = document.getElementById('respuesta');
+        const resultadoElement = document.getElementById('resultado');
+        const personajeElement = document.querySelector('.personaje');
+        const personajes = ['🐻', '🐱', '🐶', '🐥', '🐸', '🦁', '🐼', '🐷', '🐨', '🐯'];
+
+        function generarEjercicio() {
+            numero1 = Math.floor(Math.random() * 10) + 1;
+            numero2 = Math.floor(Math.random() * 10) + 1;
+            respuestaCorrecta = numero1 * numero2;
+            ejercicioElement.textContent = `${numero1} x ${numero2} = ?`;
+            respuestaInput.value = '';
+            resultadoElement.textContent = '';
+            personajeElement.textContent = `${personajes[Math.floor(Math.random() * personajes.length)]} x `;
+        }
+
+        function verificarRespuesta() {
+            const respuestaUsuario = parseInt(respuestaInput.value);
+            if (!isNaN(respuestaUsuario)) {
+                if (respuestaUsuario === respuestaCorrecta) {
+                    resultadoElement.textContent = '¡Correcto! 🎉';
+                    resultadoElement.className = 'resultado correcto';
+                    setTimeout(generarEjercicio, 1500); // Nuevo ejercicio después de un breve tiempo
+                } else {
+                    resultadoElement.textContent = `¡Incorrecto! La respuesta era ${respuestaCorrecta}. 😔`;
+                    resultadoElement.className = 'resultado incorrecto';
+                }
+            } else {
+                resultadoElement.textContent = 'Por favor, escribe un número.';
+                resultadoElement.className = 'resultado incorrecto';
+            }
+        }
+
+        // Generar el primer ejercicio al cargar la página
+        generarEjercicio();
+    </script>
+</body>
+</html>
